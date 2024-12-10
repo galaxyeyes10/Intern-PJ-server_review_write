@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, Request, Form
+from fastapi import FastAPI, Depends, Request, Body
 from sqlalchemy.orm import Session
 from model import ReviewTable, UserTable, StoreTable, MenuTable
 from db import session
@@ -45,13 +45,13 @@ async def get_menu_ids(store_id: int, db: Session = Depends(get_db)):
 #작성한 리뷰를 데이터베이스에 저장
 @review_write.post("/write_review/")
 async def create_review(
-    user_id: str,
-    menu_id: int,
-    store_id: int,
-    rating: float = Form(...),
-    content: str = Form(...),
-    photo_url: str = Form(...),
-    title: str = Form(...),
+    user_id: str = Body(...),
+    menu_id: int = Body(...),
+    store_id: int = Body(...),
+    rating: float = Body(...),
+    content: str = Body(...),
+    photo_url: str = Body(...),
+    title: str = Body(...),
     db: Session = Depends(get_db)
 ):
     new_review = ReviewTable(
